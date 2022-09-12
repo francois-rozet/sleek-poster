@@ -1,0 +1,256 @@
+\ProvidesPackage{sleek}[2022/09/13 v0.0.1 Sleek for Posters]
+
+%%%%%%%%%%
+% Poster %
+%%%%%%%%%%
+
+\RequirePackage[size=a0, scale=1.4]{beamerposter}
+
+\usetheme{metropolis}
+\usefonttheme{professionalfonts}
+
+% Colors
+
+\definecolor{DarkBlue}{HTML}{273C75}
+\definecolor{BrightOrange}{HTML}{EB811B}
+\definecolor{BrightGreen}{HTML}{14B03D}
+
+\setbeamercolor{palette primary}{fg=white, bg=DarkBlue}
+
+\renewcommand*{\metropolis@colors@dark}{
+    \setbeamercolor{normal text}{fg=white, bg=DarkBlue}
+}
+
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{alerted text}{fg=BrightOrange}
+\setbeamercolor{example text}{fg=BrightGreen}
+
+\setbeamercolor{progress bar}{fg=BrightOrange, bg=black!30}
+
+\setbeamercolor{block title}{fg=black, bg=DarkBlue!20}
+\setbeamercolor{block body}{bg=DarkBlue!10}
+\setbeamercolor{block title alerted}{fg=black, bg=BrightOrange!20}
+\setbeamercolor{block body alerted}{bg=BrightOrange!10}
+
+% Frame
+
+\setbeamersize{text margin left=0.015\paperwidth, text margin right=0.015\paperwidth}
+
+% Headline
+
+\newcommand*{\arxiv}[1]{\def\insertarxiv{#1}}
+\newcommand*{\github}[1]{\def\insertgithub{#1}}
+\newcommand*{\link}[1]{\def\insertlink{#1}}
+
+\setbeamercolor{headline}{fg=white, bg=DarkBlue}
+\setbeamerfont{headline title}{size=\Large, series=\bfseries}
+\setbeamerfont{headline author}{size=\large}
+\setbeamerfont{headline arxiv}{size=\large, series=\ttfamily}
+\setbeamerfont{headline github}{size=\large, series=\ttfamily}
+
+\setbeamertemplate{headline title}{\inserttitle\unskip\par}
+\setbeamertemplate{headline author}{\insertauthor\unskip\par}
+\setbeamertemplate{headline logo}{\includegraphics[height=0.035\paperwidth]{uliege.pdf}}
+\setbeamertemplate{headline arxiv}{\href{https://arxiv.org/abs/\insertarxiv}{arXiv:\insertarxiv}\unskip\par}
+\setbeamertemplate{headline github}{\href{https://github.com/\insertgithub}{\includegraphics[height=2ex]{github.pdf} \insertgithub}\unskip\par}
+
+\newsavebox{\tempbox}
+
+\setbeamertemplate{headline}{%
+    \begin{beamercolorbox}[sep=0.015\paperwidth]{headline}%
+        \savebox{\tempbox}{\usebeamertemplate*{headline title}}%
+        \begin{minipage}[c]{\wd\tempbox}
+            \usebeamertemplate*{headline title}
+            \usebeamertemplate*{headline author}
+        \end{minipage}%
+        \hfill%
+        \savebox{\tempbox}{\usebeamertemplate*{headline logo}}%
+        \begin{minipage}[c]{\wd\tempbox}
+            \vspace*{-0.0075\paperwidth}
+            \usebeamertemplate*{headline logo}%
+            \vspace*{-0.0075\paperwidth}
+        \end{minipage}%
+        \hfill%
+        \savebox{\tempbox}{\usebeamertemplate*{headline github}}%
+        \begin{minipage}[c]{\wd\tempbox}
+            \begin{center}
+                \usebeamertemplate*{headline arxiv}
+                \usebeamertemplate*{headline github}
+            \end{center}
+        \end{minipage}%
+        \hfill%
+        \begin{minipage}[c]{0.0375\paperwidth}
+            \vspace*{-0.0075\paperwidth}
+            \qrcode[height=0.045\paperwidth]{\insertlink}%
+            \vspace*{-0.0075\paperwidth}
+        \end{minipage}%
+    \end{beamercolorbox}
+}
+
+% Columns
+
+\setlength{\columnsep}{0.015\paperwidth}
+
+% Footer
+
+\setbeamertemplate{footline}{}
+
+% Sections
+
+\renewcommand*{\section}[1]{\vspace{1ex}\textcolor{DarkBlue}{\large\bfseries#1}\unskip\par}
+
+% Figures
+
+\setbeamerfont{caption}{size=\normalsize}
+
+% Itemize
+
+\addtolength{\leftmargini}{-\labelsep}
+
+% Blocks
+
+\addtobeamertemplate{block begin}{\setlength{\textwidth}{\columnwidth}}{}
+\addtobeamertemplate{block alerted begin}{\setlength{\textwidth}{\columnwidth}}{}
+
+\makeatletter
+\setlength{\metropolis@blocksep}{3ex}
+\setlength{\metropolis@blockadjust}{0pt}
+\renewcommand*{\metropolis@strut}{}
+\makeatother
+
+%%%%%%%%%%%%
+% Settings %
+%%%%%%%%%%%%
+
+% Font
+
+\RequirePackage{microtype}
+\RequirePackage{ragged2e}
+
+\justifying
+
+% Layout
+
+\RequirePackage{multicol}
+
+% Text
+
+\RequirePackage{eurosym}
+\RequirePackage{csquotes}
+\RequirePackage[parfill]{parskip}
+
+% Links
+
+\RequirePackage{qrcode}
+
+% Mathematics
+
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{bm}
+\RequirePackage{esint}
+\RequirePackage{mathtools}
+
+% Units
+
+\RequirePackage{siunitx}
+
+\sisetup{separate-uncertainty}
+\sisetup{separate-uncertainty-units=single}
+
+% Figures
+
+\RequirePackage{float}
+\RequirePackage[skip=1.5ex]{caption}
+\RequirePackage{subcaption}
+
+\captionsetup{labelsep=period} % 'Figure 1.2.' instead of 'Figure 1.2:'
+
+% Tables
+
+\RequirePackage{array}
+\RequirePackage{booktabs}
+\RequirePackage{multirow}
+
+\renewcommand{\arraystretch}{1.1}
+
+\setlength{\arraycolsep}{1em}
+\setlength{\tabcolsep}{2em}
+
+% Bibliography
+
+\RequirePackage[
+    backend=biber,
+    style=numeric-comp,
+    sorting=none,
+    maxcitenames=1,
+    maxbibnames=3
+]{biblatex}
+
+\DeclareFieldFormat*{title}{\enquote{#1}}
+\DeclareFieldFormat*{citetitle}{\enquote{#1}}
+
+% Others
+
+\RequirePackage{comment}
+
+%%%%%%%%%%%
+% Options %
+%%%%%%%%%%%
+
+\DeclareOption{french}{
+    %% Lists
+    \frenchbsetup{StandardLists=true}
+
+    %% Units
+    \sisetup{output-decimal-marker=,}
+
+    %% Captions
+    \addto\captionsfrench{\def\figurename{Figure}}
+    \addto\captionsfrench{\def\tablename{Table}}
+    \addto\captionsfrench{\def\proofname{Preuve}}
+
+    %% Macros
+    \def\cad{c.-à-d.\@}
+    \def\Cad{C.-à-d.\@}
+}
+
+\ProcessOptions\relax
+
+%%%%%%%%%%%%
+% Commands %
+%%%%%%%%%%%%
+
+% Abbreviations
+
+\def\cf{\emph{cf.}\@} % confer
+\def\eg{\emph{e.g.}\@} % exempli gratia
+\def\ie{\emph{i.e.}\@} % id est
+
+% Mathematics
+
+\DeclarePairedDelimiter\rbk{(}{)} % round brackets (parentheses)
+\DeclarePairedDelimiter\cbk{\{}{\}} % curly brackets {braces}
+\DeclarePairedDelimiter\sbk{[}{]} % square brackets [brackets]
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert} % absolute value |x|
+\DeclarePairedDelimiter\norm{\lVert}{\rVert} % norm ||x||
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil} % ceil ⌈x⌉
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor} % floor ⌊x⌋
+
+\renewcommand*{\d}[1]{\operatorname{d}\!{#1}} % upright 'd' for differential
+
+\DeclareMathOperator{\tr}{tr} % trace
+\DeclareMathOperator{\diag}{diag} % diagonal
+
+% Figures
+
+\newcommand*{\noskipcaption}[1]{\caption{#1}\vspace{-\intextsep}} % caption without additional vertical space
+
+% Footnotes
+
+\makeatletter
+\def\blindfootnote{\gdef\@thefnmark{}\@footnotetext} % footnote without number
+\makeatother
+
+\endinput
